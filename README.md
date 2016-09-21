@@ -39,7 +39,8 @@ var schema = Joi.object().keys({
     email: Joi.string().email()
 }).with('username', 'birthyear').without('password', 'access_token');
 
-Joi.validate({ username: 'abc', birthyear: 1994 }, schema, function (err, value) { });  // err === null -> valid
+var results = Joi.validate({ username: 'abc', birthyear: 1994 }, schema);
+// results.error === null -> valid
 ```
 
 The above schema defines the following constraints:
@@ -75,7 +76,7 @@ new schema object.
 Then the value is validated against the schema:
 
 ```javascript
-Joi.validate({ a: 'a string' }, schema, function (err, value) { });
+var results = Joi.validate({ a: 'a string' }, schema);
 ```
 
 If the value is valid, `null` is returned, otherwise an `Error` object.
@@ -86,7 +87,7 @@ The schema can be a plain JavaScript object where every key is assigned a **joi*
 var schema = Joi.string().min(10);
 ```
 
-If the schema is a **joi** type, the `schema.validate(value, callback)` can be called directly on the type. When passing a non-type schema object,
+If the schema is a **joi** type, the `schema.validate(value)` can be called directly on the type. When passing a non-type schema object,
 the module converts it internally to an object() type equivalent to:
 
 ```javascript
